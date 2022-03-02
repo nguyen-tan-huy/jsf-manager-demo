@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+   <title>Demo</title>
+</h:head>
+
+<h:body>
+   <p:commandButton value="Add Catalog" type="button" icon="pi pi-external-link" onclick="PF('add-catalog').show()"/>
+   <h:form id="form-data">
+      <p:dataTable var="catalog" value="#{Catalog.catalogList}">
+         <p:column headerText="Id">
+            <h:outputText value="#{catalog.id}" />
+         </p:column>
+
+         <p:column headerText="Name">
+            <h:outputText value="#{catalog.name}" />
+         </p:column>
+
+         <p:column headerText="Edit">
+            <p:commandButton value="Edit" styleClass="rounded-button" icon="pi pi-check"
+                             onclick="PF('edit-catalog').show()">
+
+               <f:setPropertyActionListener target="#{Catalog.selectedCategory}" value="#{catalog}"/>
+            </p:commandButton>
+         </p:column>
+
+         <p:column headerText="Delete">
+            <p:commandButton value="Delete" styleClass="rounded-button ui-button-danger" icon="pi pi-times" action="#{Catalog.delete(catalog.id)}" update="form-data">
+               <p:confirm header="Confirmation" message="Do you want to delete catalog?" icon="pi pi-info-circle"/>
+            </p:commandButton>
+            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true" width="350">
+               <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no ui-button-flat"/>
+               <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" />
+            </p:confirmDialog>
+         </p:column>
+      </p:dataTable>
+   </h:form>
+
+   <!-- Modal Edit Catalog -->
+   <p:dialog header="Edit Catalog" widgetVar="edit-catalog" minHeight="40" width="350" showEffect="fade" modal="true">
+      <h:form id="frm-update">
+         <div style="margin-bottom:10px;">
+            <h:outputText value="Name: "/>
+            <p:inputText value="#{Catalog.selectedCategory.name}"></p:inputText>
+         </div>
+         <p:commandButton update="form-data" value="Enter" action="#{Catalog.update}" onclick="PF('edit-catalog').close()"></p:commandButton>
+      </h:form>
+   </p:dialog>
+
+   <!-- Modal Add Catalog -->
+   <p:dialog header="Add Catalog" widgetVar="add-catalog" minHeight="40" width="350" showEffect="fade" modal="true">
+      <h:form id="frm-add">
+         <div style="margin-bottom:10px;">
+            <h:outputText value="Name: "/>
+            <p:inputText value="#{Catalog.catalogName}"></p:inputText>
+         </div>
+         <p:commandButton update="form-data" value="Enter" action="#{Catalog.add}" onclick="PF('add-catalog').close()"></p:commandButton>
+      </h:form>
+   </p:dialog>
+</h:body>
+</html>

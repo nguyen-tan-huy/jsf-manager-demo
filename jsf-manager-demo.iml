@@ -32,6 +32,8 @@
     <orderEntry type="library" name="Maven: com.sun.faces:jsf-api:2.2.20" level="project" />
     <orderEntry type="library" name="Maven: com.sun.faces:jsf-impl:2.2.20" level="project" />
     <orderEntry type="library" name="Maven: org.primefaces:primefaces:10.0.0" level="project" />
+    <orderEntry type="library" name="mongo-java-driver-3.4.2" level="project" />
+    <orderEntry type="library" name="MongoDynamicObject" level="project" />
     <orderEntry type="library" name="connector" level="project" />
   </component>
 </module>

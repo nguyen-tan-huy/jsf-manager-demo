@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <title>Product Manager</title>
+</h:head>
+
+<h:body>
+    <div style="display: flex">
+        <p:commandButton value="Add Product" type="button" icon="pi pi-external-link" onclick="PF('add-product').show()" style="margin: 5px"/>
+        <h:form  style="margin: 5px">
+            <p:commandButton value="Refesh Product" type="sumit" icon="pi pi-external-link" action="#{Product.refreshProduct}" update="form-data-product"/>
+        </h:form>
+    </div>
+
+    <h:form>
+        <p:panel id="panel" header="Search Product" styleClass="p-mb-3">
+            <p:growl id="messages"/>
+            <h:panelGrid columns="4" cellpadding="7">
+                <div>
+                    <h:outputLabel for="nameProductSearch" value="Nhập Tên Sản Phẩm: *"/>
+                    <p:inputText id="nameProductSearch" value="#{Product.nameProductSearch}" required="true" label="Text 1" style="width: 12rem">
+                        <f:validateLength minimum="2"/>
+                    </p:inputText>
+                    <p:message for="nameProductSearch"/>
+                </div>
+                <div>
+                    <h:outputLabel for="nameCatalog" value="Tên Danh Mục: *"/>
+                    <p:selectOneMenu id="nameCatalog" value="#{Product.idCatalogSearch}" required="true" label="Tên Danh Mục" style="width: 12rem">
+                        <f:selectItems var="catalog" value="#{Catalog.catalogList}" itemValue="#{catalog.id}" itemLabel="#{catalog.name}"></f:selectItems>
+                    </p:selectOneMenu>
+                </div>
+            </h:panelGrid>
+        </p:panel>
+        <p:commandButton value="Tìm kiếm" action="#{Product.searchProduct()}" styleClass="p-mr-2" update="form-data-product"/>
+    </h:form>
+
+            <h:form id="form-data-product">
+                <p:dataTable var="product" value="#{Product.productList}" rows="12" paginator="true">
+                    <p:column headerText="Image">
+                        <p:graphicImage value="/images/#{product.image}" library="demo" style="width: 150px; height: 150px"/>
+                    </p:column>
+                    <p:column headerText="Name">
+                        <h:outputText value="#{product.name}" />
+                    </p:column>
+                    <p:column headerText="Price">
+                        <h:outputText value="#{product.price}" />
+                    </p:column>
+                    <p:column headerText="Edit">
+                        <p:commandButton value="Edit" styleClass="rounded-button" icon="pi pi-check" onclick="PF('edit-product').show()">
+                            <f:setPropertyActionListener target="#{Product.productSelected}" value="#{product}"/>
+                        </p:commandButton>
+                    </p:column>
+
+                    <p:column headerText="Delete">
+                        <p:commandButton value="Delete" styleClass="rounded-button ui-button-danger" icon="pi pi-times" action="#{Product.delete(product.id)}" update="form-data-product" >
+                            <p:confirm header="Confirmation" message="Do you want to delete catalog?" icon="pi pi-info-circle"/>
+                        </p:commandButton>
+                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true" width="350">
+                            <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no ui-button-flat"/>
+                            <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" />
+                        </p:confirmDialog>
+                    </p:column>
+                </p:dataTable>
+            </h:form>`
+
+        <!-- Modal Add Product -->
+        <p:dialog header="Add Product" widgetVar="add-product" minHeight="40" width="400" showEffect="fade" modal="true">
+            <h:form enctype="multipart/form-data" id="form-add">
+                <div style="margin: 10px">
+                    <h:outputText value="Name: " style="margin: 5px"/>
+                    <h:inputText id="name" value="#{Product.productName}"></h:inputText>
+                </div>
+                <div style="margin: 10px">
+                    <h:outputText value="Image" style="margin: 5px"/>
+                    <p:fileUpload id="image" value="#{Product.productImage}" mode="simple" skinSimple="true" required="true" allowTypes="/(\.|\/)(jpe?g|png)$/"/>
+                </div>
+                <div style="margin: 10px">
+                    <h:outputText value="Catalog" style="margin: 5px"/>
+                    <p:row>
+                        <p:selectOneMenu id="select-catalog" value="#{Product.productCatalogId}">
+                            <f:selectItems var="catalog" value="#{Catalog.catalogList}" itemValue="#{catalog.id}" itemLabel="#{catalog.name}"></f:selectItems>
+                        </p:selectOneMenu>
+                    </p:row>
+                    <p:commandButton value="Add Catalog" type="button" icon="pi pi-external-link" onclick="PF('add-catalog').show()"/>
+                </div>
+                <div style="margin: 10px">
+                    <h:outputText value="Peice" style="margin: 5px"/>
+                    <p:inputNumber id="price" value="#{Product.productPrice}"  ></p:inputNumber>
+                </div>
+                <p:commandButton action="#{Product.add()}"  value="Add Product"  update="form-data-product" onclick="PF('add-product').close()"></p:commandButton>
+
+            </h:form>
+        </p:dialog>
+
+    <!-- Modal Edit Product -->
+    <p:dialog header="Edit Product" widgetVar="edit-product" minHeight="40" width="350" showEffect="fade" modal="true">
+        <h:form id="form-edit" enctype="multipart/form-data">
+            <h:form enctype="multipart/form-data" id="form-update">
+                <div style="margin: 10px">
+                    <h:outputText value="Name: " style="margin: 5px"/>
+                    <h:inputText value="#{Product.productSelected.name}"></h:inputText>
+                </div>
+                <div style="margin: 10px">
+                    <h:outputText value="Image" style="margin: 5px"/>
+                    <p:fileUpload value="#{Product.productImage}" mode="simple" skinSimple="true" required="true" allowTypes="/(\.|\/)(jpe?g|png)$/"/>
+                </div>
+                <div style="margin: 10px">
+                    <h:outputText value="Catalog" style="margin: 5px"/>
+                    <p:row>
+                        <p:selectOneMenu value="#{Product.productSelected.catalogId}">
+                            <f:selectItems var="catalog" value="#{Catalog.catalogList}" itemValue="#{catalog.id}" itemLabel="#{catalog.name}"></f:selectItems>
+                        </p:selectOneMenu>
+                    </p:row>
+                    <p:commandButton value="Add Catalog" type="button" icon="pi pi-external-link" onclick="PF('add-catalog').show()"/>
+                </div>
+                <div style="margin: 10px">
+                    <h:outputText value="Peice" style="margin: 5px"/>
+                    <p:inputNumber value="#{Product.productSelected.price}" ></p:inputNumber>
+                </div>
+                <p:commandButton action="#{Product.update()}"  value="Enter"  update="form-data-product" onclick="PF('edit-product').close()"></p:commandButton>
+            </h:form>
+        </h:form>
+    </p:dialog>
+</h:body>
+</html>

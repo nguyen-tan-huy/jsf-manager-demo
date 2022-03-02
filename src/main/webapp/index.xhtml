@@ -11,19 +11,11 @@
     </h:head>
 
     <h:body>
-        <p:dataTable var="catalog" value="">
-            <p:column headerText="ID">
-                <h:outputText value=""></h:outputText>
-            </p:column>
-            <p:column headerText="NAME">
-                <h:outputText value=""></h:outputText>
-            </p:column>
-            <p:column headerText="ID">
-                <h:commandButton type="button" value="Edit"></h:commandButton>
-            </p:column>
-            <p:column headerText="ID">
-                <h:commandButton type="button" value="Delete"></h:commandButton>
-            </p:column>
-        </p:dataTable>
+        <h:form>
+               <p:commandButton value="Catalog" action="catalog-manager.xhtml" style="margin-bottom: 10px" />
+        </h:form>
+        <h:form>
+                <p:commandButton value="Product" action="product-manager.xhtml" />
+        </h:form>
     </h:body>
 </html>

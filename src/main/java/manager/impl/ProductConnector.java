@@ -12,7 +12,7 @@ import java.util.List;
 public class ProductConnector extends BaseConnector implements IProductConnector {
 
     private MongoObjectConnector getMongoObjectConnectorProduct() {
-        return getMongoObjectConnector("product");
+        return getMongoObjectConnector("Product");
     }
 
     @Override
@@ -35,13 +35,13 @@ public class ProductConnector extends BaseConnector implements IProductConnector
     @Override
     public List<Product> searchProductByName(String value) {
         String nameProperty = "name";
-        return getMongoObjectConnectorProduct().getObjectMatchProperty(nameProperty, value);
+        return getMongoObjectConnectorProduct().getObjectMatchProperty(nameProperty, value, new ProductFactory());
     }
 
     @Override
     public List<Product> searchProductByCatalog(String value) {
         String nameProperty = "idCatalog";
-        return getMongoObjectConnectorProduct().getObjectMatchProperty(nameProperty, value);
+        return getMongoObjectConnectorProduct().getObjectMatchProperty(nameProperty, value, new ProductFactory());
     }
 
     @Override

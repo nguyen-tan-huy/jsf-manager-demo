@@ -5,7 +5,7 @@ public class Product {
     private String name;
     private String image;
     private double price;
-    private String idCatelog;
+    private String catalogId;
 
     public Product() {
     }
@@ -15,7 +15,7 @@ public class Product {
         this.name = name;
         this.image = image;
         this.price = price;
-        this.idCatelog = idCatelog;
+        this.catalogId = idCatelog;
     }
 
     public String getId() {
@@ -50,11 +50,11 @@ public class Product {
         this.price = price;
     }
 
-    public String getIdCatelog() {
-        return idCatelog;
+    public String getCatalogId() {
+        return catalogId;
     }
 
-    public void setIdCatelog(String idCatelog) {
-        this.idCatelog = idCatelog;
+    public void setCatalogId(String catalogId) {
+        this.catalogId = catalogId;
     }
 }

@@ -25,7 +25,7 @@ public class ProductFactory implements IMongoObjectFactory {
             product.setPrice(Double.parseDouble(document.get("price").toString()));
         }
         if (document.get("idCatalog") != null) {
-            product.setIdCatelog(document.get("idCatalog").toString());
+            product.setCatalogId(document.get("idCatalog").toString());
         }
         return product;
     }
@@ -39,7 +39,7 @@ public class ProductFactory implements IMongoObjectFactory {
         iDynamicObject.put("name", model.getName());
         iDynamicObject.put("image",model.getImage());
         iDynamicObject.put("price",model.getPrice());
-        iDynamicObject.put("catalogId",model.getIdCatelog());
+        iDynamicObject.put("catalogId",model.getCatalogId());
         return iDynamicObject;
     }
 }

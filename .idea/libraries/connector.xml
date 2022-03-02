@@ -2,8 +2,6 @@
   <library name="connector">
     <CLASSES>
       <root url="jar://$USER_HOME$/Desktop/workpace/MongoConnectorDemo/lib/connector.jar!/" />
-      <root url="jar://$USER_HOME$/Desktop/workpace/MongoConnectorDemo/lib/mongo-java-driver-3.4.2.jar!/" />
-      <root url="jar://$USER_HOME$/Desktop/workpace/MongoConnectorDemo/lib/MongoDynamicObject.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

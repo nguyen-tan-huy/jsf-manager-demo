@@ -6,8 +6,13 @@
 
     <navigation-rule>
         <navigation-case>
-            <from-outcome>index2.xhtml</from-outcome>
-            <to-view-id>index2.xhtml</to-view-id>
+            <from-outcome>product-manager.xhtml</from-outcome>
+            <to-view-id>product-manager.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>catalog-manager.xhtml</from-outcome>
+            <to-view-id>catalog-manager.xhtml</to-view-id>
             <redirect/>
         </navigation-case>
     </navigation-rule>
